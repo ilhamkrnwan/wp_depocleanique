@@ -1,0 +1,286 @@
+/*
+ * Depocleanique Custom — main.css
+ * Custom styles yang melengkapi Tailwind CDN.
+ */
+
+/* ─── CSS Variables ─────────────────────────────────── */
+:root {
+    --dc-primary: #0d9488; /* teal-600 */
+    --dc-primary-dark: #0f766e; /* teal-700 */
+    --dc-primary-light: #f0fdfa; /* teal-50  */
+    --dc-font: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ─── Base ───────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: var(--dc-font);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography helpers ─────────────────────────────── */
+.dc-section-label {
+    display: inline-block;
+    background-color: #ccfbf1; /* teal-100 */
+    color: #0f766e; /* teal-700 */
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
+    letter-spacing: 0.025em;
+    margin-bottom: 1rem;
+}
+
+.dc-section-title {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: #111827; /* gray-900 */
+    line-height: 1.25;
+}
+
+.dc-section-subtitle {
+    color: #6b7280; /* gray-500 */
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 42rem;
+}
+
+/* ─── Header ─────────────────────────────────────────── */
+#site-header {
+    transition: box-shadow 0.3s ease;
+}
+
+#site-header.scrolled {
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Mobile menu transition ─────────────────────────── */
+#mobile-menu {
+    transition:
+        height 0.25s ease,
+        opacity 0.25s ease;
+}
+
+/* ─── FAQ Accordion ──────────────────────────────────── */
+.dc-faq-panel {
+    overflow: hidden;
+    transition:
+        max-height 0.3s ease,
+        opacity 0.3s ease;
+    max-height: 0;
+    opacity: 0;
+}
+
+.dc-faq-panel.is-open {
+    max-height: 500px;
+    opacity: 1;
+}
+
+.dc-faq-icon {
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.dc-faq-icon.is-open {
+    transform: rotate(180deg);
+}
+
+/* ─── Floating tools ─────────────────────────────────── */
+#scroll-top {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#scroll-top.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ─── Pricing card highlight ─────────────────────────── */
+.dc-pricing-featured {
+    position: relative;
+    border: 2px solid var(--dc-primary);
+}
+
+.dc-pricing-badge {
+    position: absolute;
+    top: -0.875rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dc-primary);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.25rem 0.875rem;
+    border-radius: 9999px;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+}
+
+/* ─── dc-page-content (the_content() prose styles) ─── */
+/*
+ * Digunakan di page-tentang-kami.php dan page-kontak.php
+ * untuk styling output dari WordPress editor (the_content()).
+ * Tanpa ini, teks dari editor akan tampil tanpa margin/heading style.
+ */
+
+.dc-page-content {
+    color: #374151; /* gray-700 */
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+.dc-page-content h1,
+.dc-page-content h2,
+.dc-page-content h3,
+.dc-page-content h4,
+.dc-page-content h5,
+.dc-page-content h6 {
+    color: #111827; /* gray-900 */
+    font-weight: 700;
+    line-height: 1.3;
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+}
+
+.dc-page-content h1 {
+    font-size: 2rem;
+}
+.dc-page-content h2 {
+    font-size: 1.5rem;
+}
+.dc-page-content h3 {
+    font-size: 1.25rem;
+}
+.dc-page-content h4 {
+    font-size: 1.125rem;
+}
+
+.dc-page-content p {
+    margin-top: 0;
+    margin-bottom: 1.25em;
+}
+
+.dc-page-content a {
+    color: #0d9488; /* teal-600 */
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.dc-page-content a:hover {
+    color: #0f766e; /* teal-700 */
+}
+
+.dc-page-content ul,
+.dc-page-content ol {
+    margin-bottom: 1.25em;
+    padding-left: 1.5rem;
+}
+
+.dc-page-content ul {
+    list-style-type: disc;
+}
+.dc-page-content ol {
+    list-style-type: decimal;
+}
+
+.dc-page-content li {
+    margin-bottom: 0.5em;
+}
+
+.dc-page-content blockquote {
+    border-left: 4px solid #0d9488;
+    margin: 1.5em 0;
+    padding: 0.75em 1.25em;
+    background: #f0fdfa; /* teal-50 */
+    color: #374151;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-style: italic;
+}
+
+.dc-page-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    margin: 1.5em 0;
+}
+
+.dc-page-content strong {
+    font-weight: 700;
+    color: #111827;
+}
+.dc-page-content em {
+    font-style: italic;
+}
+
+.dc-page-content hr {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 2em 0;
+}
+
+.dc-page-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5em;
+    font-size: 0.875rem;
+}
+
+.dc-page-content th,
+.dc-page-content td {
+    border: 1px solid #e5e7eb;
+    padding: 0.625rem 0.875rem;
+    text-align: left;
+}
+
+.dc-page-content th {
+    background: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Gutenberg alignment helpers */
+.dc-page-content .aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dc-page-content .alignleft {
+    float: left;
+    margin-right: 1.5em;
+    margin-bottom: 0.75em;
+}
+.dc-page-content .alignright {
+    float: right;
+    margin-left: 1.5em;
+    margin-bottom: 0.75em;
+}
+
+/* ─── Partnership step connector ────────────────────── */
+.dc-step-connector {
+    position: absolute;
+    top: 1.5rem;
+    left: calc(50% + 2rem);
+    right: calc(-50% + 2rem);
+    height: 2px;
+    background: linear-gradient(to right, #99f6e4, #ccfbf1);
+}
+
+@media (max-width: 767px) {
+    .dc-step-connector {
+        display: none;
+    }
+}
