@@ -39,7 +39,7 @@ $packages = [
         'progress'       => 88,
         'recommended'    => true,
         'badge'          => 'Paling Populer',
-        'cta_label'      => 'Pilih Paket King →',
+        'cta_label'      => 'Pilih Paket King',
         'features'       => [
             [ 'label' => 'Eksklusif Area (Radius 5KM)', 'included' => true ],
             [ 'label' => 'Initial Stok 600L + Dispenser', 'included' => true ],
@@ -177,6 +177,7 @@ $trust_items = [
                         aria-label="<?php echo esc_attr( 'Pilih Paket ' . $package['name'] . ' via WhatsApp' ); ?>"
                     >
                         <?php echo esc_html( $package['cta_label'] ); ?>
+                        <?php echo dc_icon( 'arrow-right', 'dc-icon-sm' ); ?>
                     </a>
                 </article>
             <?php endforeach; ?>

@@ -69,7 +69,8 @@ $partnership_steps = [
         'icon_bg'     => 'var(--color-primary-soft)',
         'title'       => 'Mulai Berjualan',
         'description' => 'Outlet mulai beroperasi dengan dukungan produk, strategi promosi, dan sistem kemitraan yang sudah disiapkan.',
-        'badge'       => 'Go Live 🚀',
+        'badge'       => 'Go Live',
+        'badge_icon'  => 'rocket',
         'badge_style' => 'green',
         'final'       => true,
     ],
@@ -133,6 +134,9 @@ $badge_styles = [
                             <?php echo esc_html( $step['description'] ); ?>
                         </p>
                         <span class="partnership-step-badge" style="<?php echo esc_attr( $badge_styles[ $step['badge_style'] ] ); ?>">
+                            <?php if ( ! empty( $step['badge_icon'] ) ) : ?>
+                                <?php echo dc_icon( $step['badge_icon'], 'dc-icon-sm' ); ?>
+                            <?php endif; ?>
                             <?php echo esc_html( $step['badge'] ); ?>
                         </span>
                     </div>

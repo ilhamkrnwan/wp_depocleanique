@@ -22,6 +22,7 @@ $dc_anchor = static function ( $id ) {
     return is_front_page() ? '#' . $id : esc_url( home_url( '/#' . $id ) );
 };
 
+/* ── Katalog: WooCommerce shop bila ada, fallback ke page /katalog/ ── */
 $dc_catalog_url = function_exists( 'wc_get_page_permalink' )
     ? wc_get_page_permalink( 'shop' )
     : home_url( '/katalog/' );
@@ -37,17 +38,31 @@ if ( function_exists( 'is_shop' ) ) {
         || is_shop()
         || is_product_category()
         || is_product_tag()
-        || is_product();
+        || is_product()
+        || ( is_search() && 'product' === get_query_var( 'post_type' ) );
 }
 
-// Daftar link navigasi — label => href
+/* ── Artikel/Blog: aktif untuk arsip & single post ── */
+$dc_blog_active = ( is_home() && ! is_front_page() )
+    || is_category()
+    || is_tag()
+    || is_author()
+    || is_date()
+    || is_singular( 'post' )
+    || ( is_search() && 'product' !== get_query_var( 'post_type' ) );
+
+$dc_partnership_active = is_post_type_archive( 'partnership' )
+    || is_singular( 'partnership' )
+    || is_tax( 'partnership_type' )
+    || is_page( [ 'kemitraan', 'mitra' ] );
+
+// Daftar link navigasi — label => href, active berdasarkan URL/konteks WP saat ini.
 $dc_nav_links = [
-    [ 'label' => __( 'Beranda', 'depocleanique-custom' ),      'href' => esc_url( home_url( '/' ) ),              'active' => is_front_page() ],
+    [ 'label' => __( 'Beranda', 'depocleanique-custom' ),      'href' => esc_url( home_url( '/' ) ),              'active' => ( is_front_page() && ! $dc_blog_active && ! $dc_catalog_active && ! $dc_partnership_active ) ],
     [ 'label' => __( 'Tentang Kami', 'depocleanique-custom' ), 'href' => esc_url( home_url( '/tentang-kami/' ) ), 'active' => is_page( 'tentang-kami' ) ],
-    [ 'label' => __( 'Katalog', 'depocleanique-custom' ),      'href' => esc_url( $dc_catalog_url ),              'active' => $dc_catalog_active ],
-    [ 'label' => __( 'Paket', 'depocleanique-custom' ),        'href' => $dc_anchor( 'paket' ),                   'active' => false ],
-    [ 'label' => __( 'Kemitraan', 'depocleanique-custom' ),    'href' => $dc_anchor( 'alur-kemitraan' ),          'active' => false ],
-    [ 'label' => __( 'FAQ', 'depocleanique-custom' ),          'href' => $dc_anchor( 'faq' ),                     'active' => false ],
+    [ 'label' => __( 'Katalog', 'depocleanique-custom' ),      'href' => esc_url( $dc_catalog_url ),              'active' => (bool) $dc_catalog_active ],
+    [ 'label' => __( 'Artikel', 'depocleanique-custom' ),      'href' => esc_url( home_url( '/artikel/' ) ),      'active' => (bool) $dc_blog_active ],
+    [ 'label' => __( 'Kemitraan', 'depocleanique-custom' ),    'href' => esc_url( home_url( '/kemitraan/' ) ),    'active' => (bool) $dc_partnership_active ],
     [ 'label' => __( 'Kontak', 'depocleanique-custom' ),       'href' => esc_url( home_url( '/kontak/' ) ),       'active' => is_page( 'kontak' ) ],
 ];
 
@@ -56,28 +71,36 @@ $dc_logo_path = get_template_directory() . '/assets/images/depocleanique.webp';
 $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.webp';
 ?>
 
-<header id="site-header" class="fixed top-3 sm:top-5 left-1/2 -translate-x-1/2 w-[94%] max-w-6xl z-50">
-    <div class="nav-pill flex items-center justify-between px-4 sm:px-5 py-3 rounded-2xl">
+<?php
+/* Snippet logo reusable (header utama + drawer). */
+$dc_logo_markup = static function () use ( $dc_logo_path, $dc_logo_uri ) {
+    if ( has_custom_logo() ) {
+        the_custom_logo();
+    } elseif ( file_exists( $dc_logo_path ) ) {
+        printf(
+            '<img src="%s" alt="%s">',
+            esc_url( $dc_logo_uri ),
+            esc_attr( get_bloginfo( 'name' ) )
+        );
+    } else {
+        echo '<span class="site-logo-wordmark font-extrabold text-lg leading-none tracking-tight">'
+            . '<span style="color:var(--color-primary);">Depo</span><span style="color:var(--color-navy);">Cleanique</span>'
+            . '</span>';
+    }
+};
+?>
+<header id="site-header" class="site-header z-50">
+    <div class="site-header-inner nav-pill flex items-center justify-between">
 
         <!-- ① Logo -->
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>"
-           class="flex items-center no-underline flex-shrink-0"
+           class="site-logo flex items-center no-underline flex-shrink-0"
            aria-label="<?php esc_attr_e( 'Depo Cleanique — Kembali ke beranda', 'depocleanique-custom' ); ?>">
-            <?php if ( has_custom_logo() ) : ?>
-                <?php the_custom_logo(); ?>
-            <?php elseif ( file_exists( $dc_logo_path ) ) : ?>
-                <img src="<?php echo esc_url( $dc_logo_uri ); ?>"
-                     alt="<?php bloginfo( 'name' ); ?>"
-                     class="h-9 sm:h-10 w-auto object-contain block">
-            <?php else : ?>
-                <span class="font-extrabold text-lg leading-none tracking-tight">
-                    <span style="color:var(--color-primary);">Depo</span><span style="color:var(--color-navy);">Cleanique</span>
-                </span>
-            <?php endif; ?>
+            <?php $dc_logo_markup(); ?>
         </a>
 
-        <!-- ② Nav links — pill group (desktop) -->
-        <nav class="site-nav hidden md:flex items-center gap-0.5 rounded-full px-1.5 py-1"
+        <!-- ② Nav links — pill group (desktop ≥1024px) -->
+        <nav class="site-nav items-center gap-0.5 rounded-full px-1.5 py-1"
              style="background:var(--color-surface-soft);"
              aria-label="<?php esc_attr_e( 'Navigasi utama', 'depocleanique-custom' ); ?>">
             <?php foreach ( $dc_nav_links as $link ) : ?>
@@ -89,8 +112,8 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
             <?php endforeach; ?>
         </nav>
 
-        <!-- ③ CTA (desktop) -->
-        <div class="header-actions hidden md:flex items-center">
+        <!-- ③ CTA (desktop ≥1024px) -->
+        <div class="header-actions items-center">
             <a href="<?php echo esc_url( dc_get_wa_url( 'header' ) ); ?>"
                target="_blank"
                rel="noopener noreferrer"
@@ -103,10 +126,10 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
             </a>
         </div>
 
-        <!-- ④ Mobile hamburger -->
+        <!-- ④ Mobile hamburger (<1024px) -->
         <button id="mobile-menu-toggle"
                 type="button"
-                class="site-menu-toggle md:hidden p-2 rounded-xl"
+                class="mobile-menu-toggle site-menu-toggle p-2 rounded-xl"
                 style="background:var(--color-surface-soft); border:1px solid var(--color-border);"
                 aria-label="<?php esc_attr_e( 'Buka menu navigasi', 'depocleanique-custom' ); ?>"
                 aria-expanded="false"
@@ -116,30 +139,51 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
         </button>
     </div>
 
-    <!-- ── Mobile Menu Drawer ─────────────────────────── -->
-    <div id="mobile-menu"
-         class="site-mobile-menu hidden nav-pill mt-2 rounded-2xl px-3 py-3"
-         role="navigation"
-         aria-label="<?php esc_attr_e( 'Menu navigasi mobile', 'depocleanique-custom' ); ?>">
-        <div class="flex flex-col gap-0.5">
+    <!-- ── Backdrop overlay (klik untuk menutup) ─────────── -->
+    <div class="mobile-menu-backdrop" data-mobile-menu-close aria-hidden="true"></div>
+
+    <!-- ── Mobile Menu Drawer (satu card vertikal) ───────── -->
+    <aside id="mobile-menu"
+           class="mobile-menu-drawer"
+           aria-hidden="true"
+           aria-label="<?php esc_attr_e( 'Menu navigasi mobile', 'depocleanique-custom' ); ?>">
+
+        <!-- Header drawer: logo kiri, tombol X kanan -->
+        <div class="mobile-menu-drawer-header">
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>"
+               class="site-logo mobile-drawer-logo flex items-center no-underline"
+               aria-label="<?php esc_attr_e( 'Depo Cleanique — Kembali ke beranda', 'depocleanique-custom' ); ?>">
+                <?php $dc_logo_markup(); ?>
+            </a>
+            <button type="button"
+                    class="mobile-menu-close"
+                    data-mobile-menu-close
+                    aria-label="<?php esc_attr_e( 'Tutup menu navigasi', 'depocleanique-custom' ); ?>">
+                <span class="material-symbols-outlined" aria-hidden="true">close</span>
+            </button>
+        </div>
+
+        <!-- List menu satu kolom penuh -->
+        <nav class="mobile-menu-nav" aria-label="<?php esc_attr_e( 'Navigasi utama', 'depocleanique-custom' ); ?>">
             <?php foreach ( $dc_nav_links as $link ) : ?>
-                <a class="nav-link-mobile<?php echo $link['active'] ? ' active' : ''; ?>"
+                <a class="mobile-menu-link<?php echo $link['active'] ? ' is-active' : ''; ?>"
                    href="<?php echo $link['href']; // already escaped ?>"
                    <?php echo $link['active'] ? 'aria-current="page"' : ''; ?>>
                     <?php echo esc_html( $link['label'] ); ?>
                 </a>
             <?php endforeach; ?>
-            <a href="<?php echo esc_url( dc_get_wa_url( 'header' ) ); ?>"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="nav-cta-solid mt-2 justify-center"
-               style="width:100%;"
-               aria-label="<?php esc_attr_e( 'Konsultasi gratis via WhatsApp', 'depocleanique-custom' ); ?>">
-                <span class="material-symbols-outlined" style="font-size:18px;" aria-hidden="true">forum</span>
-                <?php esc_html_e( 'Konsultasi Gratis', 'depocleanique-custom' ); ?>
-            </a>
-        </div>
-    </div>
+        </nav>
+
+        <!-- CTA full width di bawah -->
+        <a href="<?php echo esc_url( dc_get_wa_url( 'header' ) ); ?>"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="mobile-menu-cta"
+           aria-label="<?php esc_attr_e( 'Konsultasi gratis via WhatsApp', 'depocleanique-custom' ); ?>">
+            <span class="material-symbols-outlined" style="font-size:20px;" aria-hidden="true">forum</span>
+            <?php esc_html_e( 'Konsultasi Gratis', 'depocleanique-custom' ); ?>
+        </a>
+    </aside>
 </header>
 
 <?php if ( ! is_front_page() ) : ?>

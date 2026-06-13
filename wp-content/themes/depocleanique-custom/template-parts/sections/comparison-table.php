@@ -12,7 +12,7 @@ $comparison_columns = [
     ],
     [
         'key'         => 'king',
-        'name'        => 'King ⭐',
+        'name'        => 'King',
         'price'       => 'Rp 27.5jt',
         'recommended' => true,
     ],
@@ -97,6 +97,9 @@ $comparison_totals = [
                                     <?php endif; ?>
                                     <p class="comparison-plan-name">
                                         <?php echo esc_html( $column['name'] ); ?>
+                                        <?php if ( $is_recommended ) : ?>
+                                            <?php echo dc_icon( 'star', 'dc-icon-sm comparison-plan-star' ); ?>
+                                        <?php endif; ?>
                                     </p>
                                     <p class="comparison-plan-price">
                                         <?php echo esc_html( $column['price'] ); ?>

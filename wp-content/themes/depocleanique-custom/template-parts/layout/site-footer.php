@@ -87,9 +87,9 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
 
                 <!-- Certification badges -->
                 <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                    <span class="footer-badge">🏆 Kemenkes RI</span>
-                    <span class="footer-badge">✅ Halal MUI</span>
-                    <span class="footer-badge">⚖️ DIRJEN HAKI</span>
+                    <span class="footer-badge"><?php echo dc_icon( 'award', 'dc-icon-sm' ); ?><?php esc_html_e( 'Kemenkes RI', 'depocleanique-custom' ); ?></span>
+                    <span class="footer-badge"><?php echo dc_icon( 'check-circle', 'dc-icon-sm' ); ?><?php esc_html_e( 'Halal MUI', 'depocleanique-custom' ); ?></span>
+                    <span class="footer-badge"><?php echo dc_icon( 'scale', 'dc-icon-sm' ); ?><?php esc_html_e( 'DIRJEN HAKI', 'depocleanique-custom' ); ?></span>
                 </div>
 
                 <!-- Social -->

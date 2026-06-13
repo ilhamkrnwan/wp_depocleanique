@@ -5,77 +5,90 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   /* ─── Mobile Menu ─────────────────────────────────── */
+  const siteHeader = document.getElementById("site-header");
   const menuToggle = document.getElementById("mobile-menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
   const iconHamburger = document.getElementById("icon-hamburger");
   const iconClose = document.getElementById("icon-close");
 
+  function isMenuOpen() {
+    return !!siteHeader && siteHeader.classList.contains("is-menu-open");
+  }
+
   function openMobileMenu() {
-    if (!menuToggle || !mobileMenu) {
+    if (!menuToggle || !mobileMenu || !siteHeader) {
       return;
     }
 
-    mobileMenu.classList.remove("hidden");
-    mobileMenu.classList.add("is-open");
+    siteHeader.classList.add("is-menu-open");
+    document.body.classList.add("menu-open"); // scroll lock
     menuToggle.setAttribute("aria-expanded", "true");
+    mobileMenu.setAttribute("aria-hidden", "false");
 
     if (iconHamburger) {
       iconHamburger.classList.add("hidden");
     }
-
     if (iconClose) {
       iconClose.classList.remove("hidden");
     }
   }
 
   function closeMobileMenu() {
-    if (!menuToggle || !mobileMenu) {
+    if (!menuToggle || !mobileMenu || !siteHeader) {
       return;
     }
 
-    mobileMenu.classList.add("hidden");
-    mobileMenu.classList.remove("is-open");
+    siteHeader.classList.remove("is-menu-open");
+    document.body.classList.remove("menu-open"); // restore scroll
     menuToggle.setAttribute("aria-expanded", "false");
+    mobileMenu.setAttribute("aria-hidden", "true");
 
     if (iconHamburger) {
       iconHamburger.classList.remove("hidden");
     }
-
     if (iconClose) {
       iconClose.classList.add("hidden");
     }
   }
 
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener("click", function () {
-      const isOpen = !mobileMenu.classList.contains("hidden");
-      isOpen ? closeMobileMenu() : openMobileMenu();
+  if (menuToggle && mobileMenu && siteHeader) {
+    // Hamburger: toggle buka/tutup
+    menuToggle.addEventListener("click", function (event) {
+      event.stopPropagation();
+      isMenuOpen() ? closeMobileMenu() : openMobileMenu();
     });
 
-    // Tutup menu saat link diklik
+    // Tombol close (X) & backdrop — semua elemen [data-mobile-menu-close]
+    document
+      .querySelectorAll("[data-mobile-menu-close]")
+      .forEach(function (el) {
+        el.addEventListener("click", function (event) {
+          event.preventDefault();
+          closeMobileMenu();
+        });
+      });
+
+    // Tutup menu saat link menu diklik
     mobileMenu.querySelectorAll("a").forEach(function (link) {
       link.addEventListener("click", closeMobileMenu);
     });
 
+    // Escape menutup menu
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && isMenuOpen()) {
         closeMobileMenu();
       }
     });
 
-    document.addEventListener("click", function (event) {
-      const isOpen = !mobileMenu.classList.contains("hidden");
-      const clickInsideHeader = siteHeader && siteHeader.contains(event.target);
-
-      if (isOpen && !clickInsideHeader) {
+    // Tutup bila viewport melebar ke desktop (≥1024px)
+    window.addEventListener("resize", function () {
+      if (window.innerWidth >= 1024 && isMenuOpen()) {
         closeMobileMenu();
       }
     });
   }
 
   /* ─── Sticky Header Shadow ────────────────────────── */
-  const siteHeader = document.getElementById("site-header");
-
   if (siteHeader) {
     window.addEventListener(
       "scroll",
