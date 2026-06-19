@@ -30,7 +30,7 @@ $show_featured = 1 === $paged && '' === $article_search && $article_query->have_
 <main id="main-content" class="article-archive">
     <section class="article-hero" aria-labelledby="article-hero-title">
         <div class="article-container article-hero-inner">
-            <div class="article-hero-copy">
+            <div class="article-hero-copy" data-animate="fade-up">
                 <span class="article-eyebrow"><?php esc_html_e( 'Artikel', 'depocleanique-custom' ); ?></span>
                 <h1 id="article-hero-title"><?php esc_html_e( 'Artikel & Panduan Depo Cleanique', 'depocleanique-custom' ); ?></h1>
                 <p><?php esc_html_e( 'Temukan panduan, tips, dan insight seputar produk homecare, laundry, kebersihan rumah, dan peluang usaha bersama Depo Cleanique.', 'depocleanique-custom' ); ?></p>
@@ -59,7 +59,7 @@ $show_featured = 1 === $paged && '' === $article_search && $article_query->have_
                 <?php if ( $article_query->have_posts() ) : ?>
                     <?php if ( $show_featured ) : ?>
                         <?php $article_query->the_post(); ?>
-                        <article id="post-<?php the_ID(); ?>" <?php post_class( 'article-featured-card' ); ?>>
+                        <article id="post-<?php the_ID(); ?>" <?php post_class( 'article-featured-card' ); ?> data-animate="scale-in">
                             <a class="article-featured-media" href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr( sprintf( __( 'Baca artikel: %s', 'depocleanique-custom' ), get_the_title() ) ); ?>">
                                 <?php echo dc_article_thumbnail( get_the_ID(), 'large' ); ?>
                             </a>
@@ -81,7 +81,7 @@ $show_featured = 1 === $paged && '' === $article_search && $article_query->have_
                         </article>
                     <?php endif; ?>
 
-                    <div class="article-grid">
+                    <div class="article-grid" data-stagger>
                         <?php
                         while ( $article_query->have_posts() ) :
                             $article_query->the_post();

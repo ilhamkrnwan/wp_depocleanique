@@ -65,6 +65,64 @@
     margin: 0;
 }
 
+/* Filter kategori (chips) */
+.dc-wc-filter {
+    padding: 28px 0 0;
+    background: #fff;
+}
+
+.dc-wc-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dc-wc-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-text);
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.dc-wc-chip:hover,
+.dc-wc-chip:focus-visible {
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
+    color: var(--color-primary-dark);
+}
+
+.dc-wc-chip.is-active {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.dc-wc-chip-count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: rgba(11, 126, 219, 0.1);
+    color: var(--color-primary-dark);
+    font-size: 11px;
+    font-weight: 850;
+}
+
+.dc-wc-chip.is-active .dc-wc-chip-count {
+    background: rgba(255, 255, 255, 0.22);
+    color: #fff;
+}
+
 .dc-wc-breadcrumb {
     margin-bottom: 24px;
     color: var(--color-text-muted);
@@ -238,10 +296,23 @@
 .dc-product-card-media {
     position: relative;
     display: block;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     background: var(--color-primary-soft);
     text-decoration: none;
+}
+
+.dc-product-card-fallback {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-primary-soft), var(--color-accent-soft));
+}
+
+.dc-product-card-fallback .material-symbols-outlined {
+    font-size: 64px;
+    color: rgba(11, 126, 219, 0.3);
 }
 
 .dc-product-card-media:focus-visible,
@@ -346,9 +417,17 @@
 
 .dc-product-card-meta {
     display: grid;
-    gap: 10px;
+    gap: 12px;
     margin-top: auto;
     padding-top: 18px;
+}
+
+.dc-product-card-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
 }
 
 .dc-product-card-price,
@@ -415,7 +494,6 @@
     align-items: center;
     gap: 7px;
     width: fit-content;
-    margin-top: 18px;
     color: var(--color-primary-dark);
     font-size: 14px;
     font-weight: 900;
@@ -816,6 +894,30 @@
 .dc-single-whatsapp:hover,
 .dc-single-whatsapp:focus-visible {
     background: #1ebd59;
+}
+
+.dc-single-benefits {
+    display: grid;
+    gap: 11px;
+    margin: 22px 0 0;
+    padding: 20px 0 0;
+    list-style: none;
+    border-top: 1px solid rgba(11, 126, 219, 0.12);
+}
+
+.dc-single-benefits li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.dc-single-benefits .dc-icon {
+    flex: 0 0 auto;
+    color: var(--color-accent-dark);
 }
 
 .dc-single-meta {

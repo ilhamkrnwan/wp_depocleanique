@@ -22,12 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Nomor WhatsApp mentah (tanpa + atau spasi).
- * Diambil dari Customizer. Fallback: '6285600061005'.
+ * Diambil dari Customizer. Fallback: '6287872180088'.
  *
  * @return string
  */
 function dc_get_wa_number() {
-    return get_theme_mod( 'dc_wa_number', '6285600061005' );
+    return get_theme_mod( 'dc_wa_number', '6287872180088' );
 }
 
 /**

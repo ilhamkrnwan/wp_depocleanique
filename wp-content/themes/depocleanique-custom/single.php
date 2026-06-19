@@ -29,7 +29,7 @@ get_template_part( 'template-parts/layout/site-header' );
                         <span><?php the_title(); ?></span>
                     </nav>
 
-                    <div class="article-single-title-wrap">
+                    <div class="article-single-title-wrap" data-animate="fade-up">
                         <?php echo dc_article_category_badge(); ?>
                         <h1><?php the_title(); ?></h1>
                         <?php if ( has_excerpt() ) : ?>
@@ -46,14 +46,14 @@ get_template_part( 'template-parts/layout/site-header' );
                         </div>
                     </div>
 
-                    <figure class="article-single-media">
+                    <figure class="article-single-media" data-animate="scale-in" data-animate-delay="1">
                         <?php echo dc_article_thumbnail( get_the_ID(), 'full' ); ?>
                     </figure>
                 </div>
             </header>
 
             <div class="article-container article-single-layout">
-                <div class="article-single-main">
+                <div class="article-single-main" data-animate="fade-up">
                     <div class="article-content">
                         <?php echo $article_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                     </div>

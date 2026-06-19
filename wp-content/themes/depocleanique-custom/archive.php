@@ -26,7 +26,7 @@ get_template_part( 'template-parts/layout/site-header' );
 <main id="main-content" class="article-archive article-taxonomy-archive">
     <section class="article-hero article-archive-hero" aria-labelledby="article-archive-title">
         <div class="article-container article-hero-inner">
-            <div class="article-hero-copy">
+            <div class="article-hero-copy" data-animate="fade-up">
                 <span class="article-eyebrow"><?php esc_html_e( 'Artikel', 'depocleanique-custom' ); ?></span>
                 <h1 id="article-archive-title"><?php echo esc_html( dc_get_archive_title() ); ?></h1>
                 <div class="article-hero-description">
@@ -48,7 +48,7 @@ get_template_part( 'template-parts/layout/site-header' );
         <div class="article-container article-layout">
             <div class="article-loop">
                 <?php if ( have_posts() ) : ?>
-                    <div class="article-grid">
+                    <div class="article-grid" data-stagger>
                         <?php
                         while ( have_posts() ) :
                             the_post();

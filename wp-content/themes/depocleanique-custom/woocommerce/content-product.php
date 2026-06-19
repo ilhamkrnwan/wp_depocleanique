@@ -1,6 +1,8 @@
 <?php
 /**
  * Custom product card for WooCommerce loops.
+ * Memakai sistem .dc-product-card (lihat assets/css/woocommerce.css) agar
+ * seragam dengan kartu kemitraan: image-forward, kategori, harga, stok, CTA.
  *
  * @package Depocleanique_Custom
  */
@@ -13,77 +15,77 @@ if ( empty( $product ) || ! $product->is_visible() ) {
     return;
 }
 
-$product_id        = $product->get_id();
-$product_link      = get_permalink( $product_id );
-$short_description = wp_trim_words( wp_strip_all_tags( $product->get_short_description() ), 18, '...' );
+$product_id   = $product->get_id();
+$product_link = get_permalink( $product_id );
+
+$short_description = wp_trim_words( wp_strip_all_tags( $product->get_short_description() ), 16, '…' );
 if ( ! $short_description ) {
-    $short_description = wp_trim_words( wp_strip_all_tags( $product->get_description() ), 18, '...' );
+    $short_description = wp_trim_words( wp_strip_all_tags( $product->get_description() ), 16, '…' );
 }
 
-$price_html        = $product->get_price_html();
-$rating            = $product->get_average_rating();
-if ( ! $rating ) {
-    $rating = '4.8';
+$cats          = get_the_terms( $product_id, 'product_cat' );
+$category      = ( ! is_wp_error( $cats ) && ! empty( $cats ) ) ? $cats[0] : null;
+$category_link = $category ? get_term_link( $category ) : '';
+if ( is_wp_error( $category_link ) ) {
+    $category_link = '';
 }
 
 $badge = '';
 if ( $product->is_featured() ) {
-    $badge = 'BEST SELLER';
+    $badge = __( 'Best Seller', 'depocleanique-custom' );
 } elseif ( $product->is_on_sale() ) {
-    $badge = 'PROMO';
+    $badge = __( 'Promo', 'depocleanique-custom' );
 }
 
-$size = '25L Bulk Jerigen';
-$size_attr = $product->get_attribute( 'size' );
-if ( $size_attr ) {
-    $size = $size_attr;
+// Fallback icon berdasarkan kata kunci judul (tanpa gambar produk).
+$title_lower = strtolower( $product->get_name() );
+$icon        = 'water_drop';
+if ( strpos( $title_lower, 'piring' ) !== false || strpos( $title_lower, 'dishwash' ) !== false ) {
+    $icon = 'sanitizer';
+} elseif ( strpos( $title_lower, 'pewangi' ) !== false || strpos( $title_lower, 'parfum' ) !== false || strpos( $title_lower, 'softener' ) !== false ) {
+    $icon = 'eco';
+} elseif ( strpos( $title_lower, 'lantai' ) !== false || strpos( $title_lower, 'floor' ) !== false ) {
+    $icon = 'clean_hands';
 }
 ?>
 
-<li <?php wc_product_class( '', $product ); ?>>
-    <a href="<?php echo esc_url( $product_link ); ?>" class="bg-white p-3 md:p-6 dc-card-custom border border-outline-variant/30 hover:border-secondary transition-all group block h-full">
-        <div class="aspect-square bg-surface-container-low dc-card-media-custom mb-3 md:mb-4 flex items-center justify-center relative overflow-hidden">
-            <?php if ( has_post_thumbnail( $product_id ) ) : ?>
-                <?php echo get_the_post_thumbnail( $product_id, 'medium', [ 'class' => 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-300' ] ); ?>
-            <?php else : ?>
-                <?php
-                // Smart fallback icon selection based on title keywords
-                $title_lower = strtolower( $product->get_name() );
-                $icon = 'water_drop';
-                if ( strpos( $title_lower, 'deterjen' ) !== false || strpos( $title_lower, 'cuci' ) !== false ) {
-                    $icon = 'water_drop';
-                } elseif ( strpos( $title_lower, 'piring' ) !== false || strpos( $title_lower, 'dishwash' ) !== false ) {
-                    $icon = 'sanitizer';
-                } elseif ( strpos( $title_lower, 'pewangi' ) !== false || strpos( $title_lower, 'parfum' ) !== false || strpos( $title_lower, 'softener' ) !== false ) {
-                    $icon = 'eco';
-                } elseif ( strpos( $title_lower, 'lantai' ) !== false || strpos( $title_lower, 'floor' ) !== false ) {
-                    $icon = 'clean_hands';
-                }
-                ?>
-                <span class="material-symbols-outlined text-5xl md:text-7xl text-secondary/30"><?php echo esc_html( $icon ); ?></span>
-            <?php endif; ?>
-            <?php if ( $badge ) : ?>
-                <div class="absolute top-2 right-2 bg-primary-container text-on-primary-container text-[10px] font-bold px-2 py-1 rounded-full">
-                    <?php echo esc_html( $badge ); ?>
-                </div>
-            <?php endif; ?>
-        </div>
-        <div class="space-y-1.5 md:space-y-2">
-            <div class="flex justify-between items-center">
-                <span class="text-[11px] md:text-xs font-bold text-on-surface-variant">
-                    <?php if ( ! empty( $price_html ) ) : ?>
-                        <span class="text-secondary font-extrabold"><?php echo wp_kses_post( $price_html ); ?></span>
-                    <?php else : ?>
-                        <?php echo esc_html( $size ); ?>
-                    <?php endif; ?>
-                </span>
-                <div class="flex items-center text-primary gap-1">
-                    <?php echo dc_icon( 'star', 'dc-icon-sm dc-product-rating-star' ); ?>
-                    <span class="text-[11px] md:text-xs font-bold"><?php echo esc_html( $rating ); ?></span>
-                </div>
-            </div>
-            <h4 class="text-sm md:text-lg font-bold text-on-surface group-hover:text-secondary transition-colors line-clamp-1"><?php echo esc_html( $product->get_name() ); ?></h4>
-            <p class="text-xs md:text-sm text-on-surface-variant line-clamp-2"><?php echo esc_html( $short_description ); ?></p>
-        </div>
+<li <?php wc_product_class( 'dc-product-card', $product ); ?>>
+    <a class="dc-product-card-media" href="<?php echo esc_url( $product_link ); ?>" aria-label="<?php echo esc_attr( $product->get_name() ); ?>">
+        <?php if ( has_post_thumbnail( $product_id ) ) : ?>
+            <?php echo get_the_post_thumbnail( $product_id, 'medium', [ 'class' => 'dc-product-card-image', 'loading' => 'lazy' ] ); ?>
+        <?php else : ?>
+            <span class="dc-product-card-fallback" aria-hidden="true">
+                <span class="material-symbols-outlined"><?php echo esc_html( $icon ); ?></span>
+            </span>
+        <?php endif; ?>
+
+        <?php if ( $badge ) : ?>
+            <span class="dc-product-sale-badge"><?php echo esc_html( $badge ); ?></span>
+        <?php endif; ?>
     </a>
+
+    <div class="dc-product-card-body">
+        <?php if ( $category && $category_link ) : ?>
+            <a class="dc-product-card-category" href="<?php echo esc_url( $category_link ); ?>"><?php echo esc_html( $category->name ); ?></a>
+        <?php endif; ?>
+
+        <h3 class="dc-product-card-title">
+            <a href="<?php echo esc_url( $product_link ); ?>"><?php echo esc_html( $product->get_name() ); ?></a>
+        </h3>
+
+        <?php if ( $short_description ) : ?>
+            <p class="dc-product-card-description"><?php echo esc_html( $short_description ); ?></p>
+        <?php endif; ?>
+
+        <div class="dc-product-card-meta">
+            <div class="dc-product-card-meta-row">
+                <span class="dc-product-card-price is-empty-price"><?php esc_html_e( 'Hubungi untuk harga', 'depocleanique-custom' ); ?></span>
+            </div>
+
+            <a class="dc-product-card-link" href="<?php echo esc_url( $product_link ); ?>">
+                <?php esc_html_e( 'Lihat Detail', 'depocleanique-custom' ); ?>
+                <?php echo dc_icon( 'arrow-right', 'dc-icon-sm' ); ?>
+            </a>
+        </div>
+    </div>
 </li>

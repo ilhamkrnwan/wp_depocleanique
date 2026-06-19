@@ -63,7 +63,7 @@ $comparison_totals = [
 
 <section class="comparison-section">
     <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-        <div class="comparison-heading">
+        <div class="comparison-heading" data-animate="fade-up">
             <div class="section-kicker">
                 <span class="section-kicker-dot" aria-hidden="true"></span>
                 <span>Bandingkan &amp; Pilih</span>
@@ -76,7 +76,7 @@ $comparison_totals = [
             </p>
         </div>
 
-        <div class="comparison-scroll">
+        <div class="comparison-scroll" data-animate="fade-up" data-animate-delay="1">
             <div class="comparison-card">
                 <table class="comparison-table">
                     <thead>

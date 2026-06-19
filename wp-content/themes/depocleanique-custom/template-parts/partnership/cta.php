@@ -1,6 +1,6 @@
 <?php
 /**
- * Partnership CTA block.
+ * Partnership CTA — memakai komponen CTA seragam (template-parts/sections/cta).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -9,16 +9,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $post_id = get_the_ID();
 $wa_url  = is_singular( 'partnership' ) ? dc_get_partnership_whatsapp_url( $post_id ) : dc_get_wa_url( 'partnership' );
-?>
 
-<section class="partnership-cta-section" aria-labelledby="partnership-cta-title">
-    <div>
-        <span><?php esc_html_e( 'Kemitraan Depo Cleanique', 'depocleanique-custom' ); ?></span>
-        <h2 id="partnership-cta-title"><?php esc_html_e( 'Ingin terdaftar sebagai mitra Depo Cleanique?', 'depocleanique-custom' ); ?></h2>
-        <p><?php esc_html_e( 'Hubungi tim kami untuk membahas peluang kerja sama, area operasional, dan kebutuhan produk.', 'depocleanique-custom' ); ?></p>
-    </div>
-    <a class="partnership-button partnership-button-light" href="<?php echo esc_url( $wa_url ); ?>" target="_blank" rel="noopener noreferrer">
-        <?php echo dc_icon( 'message-circle' ); ?>
-        <?php esc_html_e( 'Hubungi WhatsApp', 'depocleanique-custom' ); ?>
-    </a>
-</section>
+get_template_part(
+    'template-parts/sections/cta',
+    null,
+    [
+        'id'              => 'partnership-cta',
+        'badge'           => __( 'Kemitraan Depo Cleanique', 'depocleanique-custom' ),
+        'title'           => __( 'Ingin terdaftar sebagai mitra Depo Cleanique?', 'depocleanique-custom' ),
+        'copy'            => __( 'Hubungi tim kami untuk membahas peluang kerja sama, area operasional, dan kebutuhan produk.', 'depocleanique-custom' ),
+        'button_label'    => __( 'Hubungi WhatsApp', 'depocleanique-custom' ),
+        'button_url'      => $wa_url,
+        'button_external' => true,
+        'button_icon'     => 'chat',
+    ]
+);

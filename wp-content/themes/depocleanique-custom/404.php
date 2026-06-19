@@ -20,7 +20,7 @@ if ( empty( $catalog_url ) ) {
 <main id="main-content" class="dc-not-found-page">
     <section class="dc-not-found-section">
         <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-            <div class="dc-not-found-content">
+            <div class="dc-not-found-content" data-animate="scale-in">
                 <p class="dc-not-found-code"><?php esc_html_e( '404', 'depocleanique-custom' ); ?></p>
                 <h1><?php esc_html_e( 'Halaman tidak ditemukan', 'depocleanique-custom' ); ?></h1>
                 <p><?php esc_html_e( 'Maaf, halaman yang Anda buka mungkin sudah dipindahkan, dihapus, atau alamatnya tidak lengkap.', 'depocleanique-custom' ); ?></p>

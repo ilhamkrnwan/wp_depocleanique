@@ -88,7 +88,7 @@ Data kontak dan media sosial diatur terpusat lewat **Appearance → Customize �
 Proyek ini dikembangkan dengan **Laragon**.
 
 1. **Letakkan proyek** di `c:\laragon\www\depocleanique`.
-2. **Buat database** sesuai nama di [wp-config.php](wp-config.php) (`DB_NAME = indotech_db`). Prefix tabel: `dc_`.
+2. **Buat database** sesuai nama di [wp-config.php](wp-config.php) (`DB_NAME = depocleanique_db`). Prefix tabel: `dc_`.
 3. **Sesuaikan kredensial** DB pada `wp-config.php` bila berbeda dari default Laragon (`root` / tanpa password).
 4. **Jalankan Laragon** lalu akses situs melalui host virtual (mis. `http://depocleanique.test`).
 5. **Aktifkan tema** di Appearance → Themes → *Depocleanique Custom*.

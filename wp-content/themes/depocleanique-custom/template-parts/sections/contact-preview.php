@@ -45,7 +45,7 @@ $contact_cards = [
 <section class="py-24" id="kontak" style="background:#f2f4f6;">
     <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
         <div class="grid md:grid-cols-2 gap-16 items-start">
-            <div class="space-y-8">
+            <div class="space-y-8" data-animate="fade-right">
                 <div class="space-y-3">
                     <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#1E5FA8;">
                         Lokasi &amp; Kontak
@@ -103,23 +103,14 @@ $contact_cards = [
                 </div>
             </div>
 
-            <div class="dc-contact-map group aspect-video md:aspect-square">
-                <img
-                    class="w-full h-full object-cover"
-                    src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/contact-map.png' ); ?>"
-                    alt="<?php esc_attr_e( 'Lokasi HQ Depo Cleanique', 'depocleanique-custom' ); ?>"
+            <div class="dc-contact-map aspect-video md:aspect-square" data-animate="fade-left">
+                <iframe
+                    src="https://maps.google.com/maps?q=<?php echo urlencode( dc_get_address() ); ?>&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                    title="<?php esc_attr_e( 'Lokasi HQ Depo Cleanique', 'depocleanique-custom' ); ?>"
                     loading="lazy"
-                />
-                <div class="dc-contact-map-visual" aria-hidden="true">
-                    <span class="dc-contact-map-pin material-symbols-outlined">location_on</span>
-                    <span class="dc-contact-map-ring"></span>
-                    <span class="dc-contact-map-route"></span>
-                </div>
-                <div class="dc-contact-map-overlay">
-                    <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="dc-contact-map-link">
-                        Buka Halaman Kontak
-                    </a>
-                </div>
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen
+                ></iframe>
             </div>
         </div>
     </div>

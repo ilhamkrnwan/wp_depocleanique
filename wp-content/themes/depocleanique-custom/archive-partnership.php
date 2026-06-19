@@ -55,7 +55,7 @@ $testimonials = [
 <main id="main-content" class="partnership-archive">
     <section class="partnership-hero" aria-labelledby="partnership-archive-title">
         <div class="container mx-auto px-margin-mobile md:px-margin-desktop partnership-hero-inner">
-            <div class="partnership-hero-copy">
+            <div class="partnership-hero-copy" data-animate="fade-up">
                 <div class="section-kicker">
                     <span class="section-kicker-dot" aria-hidden="true"></span>
                     <span><?php esc_html_e( 'Kemitraan Depo Cleanique', 'depocleanique-custom' ); ?></span>
@@ -71,16 +71,16 @@ $testimonials = [
     </section>
 
     <section class="partnership-trust">
-        <div class="container mx-auto px-margin-mobile md:px-margin-desktop partnership-trust-grid">
+        <div class="container mx-auto px-margin-mobile md:px-margin-desktop partnership-trust-grid" data-stagger>
             <?php foreach ( $trust_items as $item ) : ?>
-                <div class="partnership-trust-item"><?php echo dc_icon( $item['icon'] ); ?><span><?php echo esc_html( $item['title'] ); ?></span></div>
+                <div class="partnership-trust-item" data-animate="fade-up"><?php echo dc_icon( $item['icon'] ); ?><span><?php echo esc_html( $item['title'] ); ?></span></div>
             <?php endforeach; ?>
         </div>
     </section>
 
     <section id="daftar-mitra" class="partnership-programs" aria-labelledby="partnership-programs-title">
         <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-            <div class="partnership-heading">
+            <div class="partnership-heading" data-animate="fade-up">
                 <div class="section-kicker">
                     <span class="section-kicker-dot" aria-hidden="true"></span>
                     <span><?php esc_html_e( 'Daftar Mitra', 'depocleanique-custom' ); ?></span>
@@ -88,7 +88,7 @@ $testimonials = [
                 <h2 id="partnership-programs-title"><?php esc_html_e( 'Semua mitra yang sudah terdaftar', 'depocleanique-custom' ); ?></h2>
             </div>
             <?php if ( have_posts() ) : ?>
-                <div class="partnership-grid">
+                <div class="partnership-grid" data-stagger>
                     <?php
                     while ( have_posts() ) :
                         the_post();
@@ -104,16 +104,16 @@ $testimonials = [
 
     <section class="partnership-section partnership-testimonials" aria-labelledby="testimonials-title">
         <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-            <div class="partnership-heading">
+            <div class="partnership-heading" data-animate="fade-up">
                 <div class="section-kicker">
                     <span class="section-kicker-dot" aria-hidden="true"></span>
                     <span><?php esc_html_e( 'Testimoni Mitra', 'depocleanique-custom' ); ?></span>
                 </div>
                 <h2 id="testimonials-title"><?php esc_html_e( 'Cerita sukses para mitra kami', 'depocleanique-custom' ); ?></h2>
             </div>
-            <div class="testimonials-grid">
+            <div class="testimonials-grid" data-stagger>
                 <?php foreach ( $testimonials as $item ) : ?>
-                    <div class="testimonial-card">
+                    <div class="testimonial-card" data-animate="scale-in">
                         <div class="testimonial-rating">
                             <?php for ( $i = 0; $i < $item['rating']; $i++ ) : ?>
                                 <?php echo dc_icon( 'star', 'dc-icon-sm' ); ?>
@@ -137,20 +137,20 @@ $testimonials = [
 
     <section class="partnership-section" id="faq-mitra">
         <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-            <div class="partnership-heading">
+            <div class="partnership-heading" data-animate="fade-up">
                 <div class="section-kicker">
                     <span class="section-kicker-dot" aria-hidden="true"></span>
                     <span><?php esc_html_e( 'FAQ Mitra', 'depocleanique-custom' ); ?></span>
                 </div>
                 <h2><?php esc_html_e( 'Pertanyaan seputar direktori mitra', 'depocleanique-custom' ); ?></h2>
             </div>
-            <div class="faq-list">
+            <div class="faq-list" data-stagger>
                 <?php foreach ( $faqs as $faq_index => $faq ) : ?>
                     <?php
                     $partner_faq_trigger = 'partner-faq-trigger-' . $faq_index;
                     $partner_faq_panel   = 'partner-faq-panel-' . $faq_index;
                     ?>
-                    <div class="dc-faq-item">
+                    <div class="dc-faq-item" data-animate="fade-up">
                         <button
                             id="<?php echo esc_attr( $partner_faq_trigger ); ?>"
                             type="button"
@@ -179,9 +179,7 @@ $testimonials = [
         </div>
     </section>
 
-    <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-        <?php get_template_part( 'template-parts/partnership/cta' ); ?>
-    </div>
+    <?php get_template_part( 'template-parts/partnership/cta' ); ?>
 </main>
 
 <?php get_footer(); ?>

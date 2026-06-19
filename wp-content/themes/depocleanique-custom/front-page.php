@@ -8,6 +8,7 @@
     <?php get_template_part( 'template-parts/sections/about-preview' ); ?>
     <?php get_template_part( 'template-parts/sections/advantages' ); ?>
     <?php get_template_part( 'template-parts/sections/product-catalog' ); ?>
+    <?php get_template_part( 'template-parts/sections/product-reviews' ); ?>
     <?php get_template_part( 'template-parts/sections/pricing' ); ?>
     <?php get_template_part( 'template-parts/sections/comparison-table' ); ?>
     <?php get_template_part( 'template-parts/sections/partnership-flow' ); ?>

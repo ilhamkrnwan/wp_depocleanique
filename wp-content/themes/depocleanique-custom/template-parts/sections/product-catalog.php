@@ -112,11 +112,11 @@ if ( empty( $products_list ) ) {
 
 <section class="py-24 bg-surface-container-lowest" id="katalog">
     <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6" data-animate="fade-up">
             <div class="space-y-4">
-                <h2 class="font-headline-lg text-headline-lg text-on-surface"><?php esc_html_e( 'Katalog Produk Unggulan', 'depocleanique-custom' ); ?></h2>
+                <h2 class="font-headline-lg text-headline-lg text-on-surface"><?php esc_html_e( 'Suplai Sabun Curah Grosir', 'depocleanique-custom' ); ?></h2>
                 <p class="text-on-surface-variant max-w-xl">
-                    <?php esc_html_e( 'Produk homecare premium dengan formulasi ramah lingkungan dan konsumsi berulang yang tinggi.', 'depocleanique-custom' ); ?>
+                    <?php esc_html_e( 'Formula kualitas industri, berizin Kemenkes RI, dan ramah lingkungan untuk menekan biaya operasional bisnis Anda.', 'depocleanique-custom' ); ?>
                 </p>
             </div>
             <div class="flex gap-2">
@@ -128,9 +128,9 @@ if ( empty( $products_list ) ) {
                 </button>
             </div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter" data-stagger>
             <?php foreach ( $products_list as $product ) : ?>
-            <a href="<?php echo esc_url( $product['permalink'] ); ?>" class="bg-white p-3 md:p-6 dc-card-custom border border-outline-variant/30 hover:border-secondary transition-all group block h-full">
+            <a href="<?php echo esc_url( $product['permalink'] ); ?>" class="bg-white p-3 md:p-6 dc-card-custom border border-outline-variant/30 hover:border-secondary transition-all group block h-full" data-animate="fade-up">
                 <div class="aspect-square bg-surface-container-low dc-card-media-custom mb-3 md:mb-4 flex items-center justify-center relative overflow-hidden">
                     <?php if ( $product['has_thumb'] ) : ?>
                         <?php echo get_the_post_thumbnail( $product['id'], 'medium', [ 'class' => 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-300' ] ); ?>

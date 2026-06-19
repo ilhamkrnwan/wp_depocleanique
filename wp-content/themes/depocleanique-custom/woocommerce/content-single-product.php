@@ -23,7 +23,6 @@ if ( post_password_required() ) {
 }
 
 $product_name      = $product->get_name();
-$price_html        = $product->get_price_html();
 $whatsapp_message  = sprintf(
     /* translators: %s: product name */
     __( 'Halo Depo Cleanique! Saya tertarik dengan produk %s. Bisa dibantu informasinya?', 'depocleanique-custom' ),
@@ -31,11 +30,6 @@ $whatsapp_message  = sprintf(
 );
 $whatsapp_url      = function_exists( 'dc_get_wa_url' ) ? dc_get_wa_url( 'product', $whatsapp_message ) : home_url( '/kontak/' );
 $category_list     = wc_get_product_category_list( $product->get_id(), ', ' );
-$availability      = $product->get_availability();
-$stock_label       = ! empty( $availability['availability'] )
-    ? $availability['availability']
-    : ( $product->is_in_stock() ? __( 'Tersedia', 'depocleanique-custom' ) : __( 'Stok habis', 'depocleanique-custom' ) );
-$stock_class       = $product->is_in_stock() ? 'is-in-stock' : 'is-out-of-stock';
 ?>
 
 <section class="dc-single-product-hero">
@@ -60,19 +54,8 @@ $stock_class       = $product->is_in_stock() ? 'is-in-stock' : 'is-out-of-stock'
                     <?php echo esc_html( $product_name ); ?>
                 </h1>
 
-                <div class="dc-single-price<?php echo $price_html ? '' : ' is-empty-price'; ?>">
-                    <?php
-                    if ( $price_html ) {
-                        echo wp_kses_post( $price_html );
-                    } else {
-                        esc_html_e( 'Hubungi kami untuk harga', 'depocleanique-custom' );
-                    }
-                    ?>
-                </div>
-
-                <div class="dc-single-stock <?php echo esc_attr( $stock_class ); ?>">
-                    <?php echo $product->is_in_stock() ? dc_icon( 'check-circle', 'dc-icon-sm' ) : dc_icon( 'x', 'dc-icon-sm' ); ?>
-                    <span><?php echo esc_html( $stock_label ); ?></span>
+                <div class="dc-single-price is-empty-price">
+                    <?php esc_html_e( 'Hubungi untuk harga', 'depocleanique-custom' ); ?>
                 </div>
 
                 <?php if ( $product->get_short_description() ) : ?>
@@ -81,20 +64,16 @@ $stock_class       = $product->is_in_stock() ? 'is-in-stock' : 'is-out-of-stock'
                     </div>
                 <?php endif; ?>
 
-                <div class="dc-single-purchase">
-                    <?php woocommerce_template_single_add_to_cart(); ?>
-                </div>
-
-                <?php if ( ! $product->is_in_stock() ) : ?>
-                    <p class="dc-single-unavailable">
-                        <?php esc_html_e( 'Produk ini sedang tidak tersedia. Hubungi tim kami untuk estimasi stok atau rekomendasi produk pengganti.', 'depocleanique-custom' ); ?>
-                    </p>
-                <?php endif; ?>
-
                 <a class="dc-single-whatsapp" href="<?php echo esc_url( $whatsapp_url ); ?>" target="_blank" rel="noopener noreferrer">
                     <?php echo dc_icon( 'whatsapp', 'dc-icon-sm' ); ?>
                     <span><?php esc_html_e( 'Tanya via WhatsApp', 'depocleanique-custom' ); ?></span>
                 </a>
+
+                <ul class="dc-single-benefits">
+                    <li><?php echo dc_icon( 'shield', 'dc-icon-sm' ); ?><span><?php esc_html_e( 'Produk berizin Kemenkes & Halal MUI', 'depocleanique-custom' ); ?></span></li>
+                    <li><?php echo dc_icon( 'message-circle', 'dc-icon-sm' ); ?><span><?php esc_html_e( 'Konsultasi gratis sebelum membeli', 'depocleanique-custom' ); ?></span></li>
+                    <li><?php echo dc_icon( 'store', 'dc-icon-sm' ); ?><span><?php esc_html_e( 'Cocok untuk rumah tangga & usaha', 'depocleanique-custom' ); ?></span></li>
+                </ul>
 
                 <?php if ( $category_list ) : ?>
                     <div class="dc-single-meta">

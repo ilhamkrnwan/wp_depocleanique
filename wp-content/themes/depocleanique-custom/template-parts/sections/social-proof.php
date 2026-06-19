@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <section class="social-proof-section">
     <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-        <div class="social-proof-grid">
-            <article class="social-proof-item">
+        <div class="social-proof-grid" data-stagger>
+            <article class="social-proof-item" data-animate="fade-up">
                 <div class="social-proof-icon" aria-hidden="true">
                     <span class="material-symbols-outlined">package_2</span>
                 </div>
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
             </article>
 
-            <article class="social-proof-item is-featured">
+            <article class="social-proof-item is-featured" data-animate="fade-up">
                 <div class="social-proof-icon" aria-hidden="true">
                     <span class="material-symbols-outlined">verified_user</span>
                 </div>
@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
             </article>
 
-            <article class="social-proof-item">
+            <article class="social-proof-item" data-animate="fade-up">
                 <div class="social-proof-icon" aria-hidden="true">
                     <span class="material-symbols-outlined">history</span>
                 </div>

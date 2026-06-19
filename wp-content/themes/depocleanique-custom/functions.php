@@ -12,6 +12,7 @@ require_once get_template_directory() . '/inc/helpers.php';
 require_once get_template_directory() . '/inc/customizer.php';
 require_once get_template_directory() . '/inc/page-hero-meta.php';
 require_once get_template_directory() . '/inc/partnership.php';
+require_once get_template_directory() . '/inc/contact-form.php';
 
 function depocleanique_enqueue_assets() {
     $v   = wp_get_theme()->get( 'Version' );

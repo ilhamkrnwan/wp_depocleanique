@@ -47,9 +47,11 @@ get_template_part( 'template-parts/layout/site-header' );
             );
             ?>
 
+            <?php get_template_part( 'template-parts/sections/parent-company' ); ?>
+
             <section class="internal-page-content-section internal-page-content-section--about">
                 <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-                    <article class="internal-page-content-card dc-page-content">
+                    <article class="internal-page-content-card dc-page-content" data-animate="fade-up">
                         <?php the_content(); ?>
                     </article>
                 </div>

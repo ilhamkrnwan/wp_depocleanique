@@ -27,7 +27,7 @@ $faqs = [
 
 <section class="faq-section" id="faq">
     <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-        <div class="faq-heading">
+        <div class="faq-heading" data-animate="fade-up">
             <div class="section-kicker">
                 <span class="section-kicker-dot" aria-hidden="true"></span>
                 <span>FAQ</span>
@@ -40,13 +40,13 @@ $faqs = [
             </p>
         </div>
 
-        <div class="faq-list">
+        <div class="faq-list" data-stagger>
             <?php foreach ( $faqs as $index => $faq ) : ?>
                 <?php
                 $trigger_id = 'faq-trigger-' . $index;
                 $panel_id   = 'faq-panel-' . $index;
                 ?>
-                <div class="dc-faq-item">
+                <div class="dc-faq-item" data-animate="fade-up">
                     <button
                         id="<?php echo esc_attr( $trigger_id ); ?>"
                         type="button"

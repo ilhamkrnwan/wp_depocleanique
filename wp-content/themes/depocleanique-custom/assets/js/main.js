@@ -175,4 +175,47 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+
+  /* ─── Scroll Animations (IntersectionObserver) ───── */
+  (function () {
+    var animTargets = document.querySelectorAll("[data-animate]");
+    if (!animTargets.length) return;
+
+    // Fallback: older browsers — show all immediately
+    if (!("IntersectionObserver" in window)) {
+      animTargets.forEach(function (el) {
+        el.classList.add("is-visible");
+      });
+      return;
+    }
+
+    // Auto-stagger: children of [data-stagger] get sequential delays
+    document.querySelectorAll("[data-stagger]").forEach(function (container) {
+      container.querySelectorAll("[data-animate]").forEach(function (item, i) {
+        // Only set if no manual delay attribute exists
+        if (!item.hasAttribute("data-animate-delay")) {
+          item.style.transitionDelay = (i * 0.075).toFixed(3) + "s";
+        }
+      });
+    });
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "-40px 0px",
+      }
+    );
+
+    animTargets.forEach(function (el) {
+      observer.observe(el);
+    });
+  })();
 });

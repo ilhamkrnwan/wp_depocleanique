@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'article-card' ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'article-card' ); ?> data-animate="fade-up">
     <a class="article-card-media" href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr( sprintf( __( 'Baca artikel: %s', 'depocleanique-custom' ), get_the_title() ) ); ?>">
         <?php echo dc_article_thumbnail( get_the_ID(), 'medium_large' ); ?>
     </a>

@@ -51,7 +51,7 @@ get_template_part( 'template-parts/layout/site-header' );
                     </nav>
 
                     <div class="partnership-detail-hero-grid">
-                        <div>
+                        <div data-animate="fade-right">
                             <div class="section-kicker">
                                 <span class="section-kicker-dot" aria-hidden="true"></span>
                                 <span><?php echo esc_html( $badge ?: $type_label ?: __( 'Mitra Terdaftar', 'depocleanique-custom' ) ); ?></span>
@@ -73,7 +73,7 @@ get_template_part( 'template-parts/layout/site-header' );
                                 <?php esc_html_e( 'Hubungi Mitra', 'depocleanique-custom' ); ?>
                             </a>
                         </div>
-                        <figure class="partnership-detail-media">
+                        <figure class="partnership-detail-media" data-animate="fade-left" data-animate-delay="1">
                             <?php if ( has_post_thumbnail() ) : ?>
                                 <?php the_post_thumbnail( 'full', [ 'class' => 'partnership-detail-image' ] ); ?>
                             <?php else : ?>
@@ -85,7 +85,7 @@ get_template_part( 'template-parts/layout/site-header' );
             </header>
 
             <div class="container mx-auto px-margin-mobile md:px-margin-desktop partnership-single-layout">
-                <div class="partnership-single-main">
+                <div class="partnership-single-main" data-animate="fade-up">
                     <?php if ( trim( wp_strip_all_tags( $content ) ) ) : ?>
                         <section class="partnership-content">
                             <?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -105,13 +105,23 @@ get_template_part( 'template-parts/layout/site-header' );
                             </section>
                         <?php endif; ?>
                     <?php endforeach; ?>
-
-                    <?php get_template_part( 'template-parts/partnership/related' ); ?>
-                    <?php get_template_part( 'template-parts/partnership/cta' ); ?>
                 </div>
 
                 <?php get_template_part( 'template-parts/partnership/sidebar' ); ?>
             </div>
+
+            <?php
+            /*
+             * "Mitra lain" + CTA dikeluarkan dari kolom utama agar tampil full-width
+             * di bawah layout. Di mobile ini menjaga urutan tetap rapi:
+             * hero → konten → info mitra (sidebar) → mitra lain → CTA.
+             */
+            ?>
+            <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
+                <?php get_template_part( 'template-parts/partnership/related' ); ?>
+            </div>
+
+            <?php get_template_part( 'template-parts/partnership/cta' ); ?>
         </article>
     <?php endwhile; ?>
 </main>

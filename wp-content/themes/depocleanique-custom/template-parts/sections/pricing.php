@@ -25,7 +25,7 @@ $packages = [
             [ 'label' => 'Banner & Media Promosi Offline', 'included' => true ],
             [ 'label' => '1 Month Premium Support', 'included' => true ],
             [ 'label' => 'Eksklusif Wilayah 5KM', 'included' => false ],
-            [ 'label' => 'Full AI Marketing Support', 'included' => false ],
+            [ 'label' => 'Bimbingan Pemasaran Lokal', 'included' => false ],
         ],
     ],
     [
@@ -43,10 +43,10 @@ $packages = [
         'features'       => [
             [ 'label' => 'Eksklusif Area (Radius 5KM)', 'included' => true ],
             [ 'label' => 'Initial Stok 600L + Dispenser', 'included' => true ],
-            [ 'label' => 'Full AI Marketing Support (3 Bulan)', 'included' => true ],
+            [ 'label' => 'Bimbingan & Media Promosi Lokal', 'included' => true ],
             [ 'label' => 'Lifetime Training & Priority Support', 'included' => true ],
             [ 'label' => '3D Interior Design Depo', 'included' => true ],
-            [ 'label' => 'SEO Landing Page Eksklusif', 'included' => true ],
+            [ 'label' => 'Halaman Web Promosi Wilayah', 'included' => true ],
         ],
     ],
 ];
@@ -61,7 +61,7 @@ $trust_items = [
 
 <section id="paket" class="pricing-section">
     <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-        <div class="pricing-heading">
+        <div class="pricing-heading" data-animate="fade-up">
             <div class="section-kicker">
                 <span class="section-kicker-dot" aria-hidden="true"></span>
                 <span>
@@ -76,7 +76,7 @@ $trust_items = [
             </p>
         </div>
 
-        <div class="pricing-grid">
+        <div class="pricing-grid" data-stagger>
             <?php foreach ( $packages as $package ) : ?>
                 <?php
                 $is_recommended = ! empty( $package['recommended'] );
@@ -87,6 +87,7 @@ $trust_items = [
                 ?>
                 <article
                     class="pricing-card<?php echo $is_recommended ? ' is-featured' : ''; ?>"
+                    data-animate="scale-in"
                 >
                     <?php if ( $is_recommended ) : ?>
                         <div class="pricing-popular-badge">

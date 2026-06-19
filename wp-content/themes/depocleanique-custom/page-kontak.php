@@ -50,7 +50,7 @@ get_template_part( 'template-parts/layout/site-header' );
             <section class="internal-contact-section">
                 <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
                     <div class="internal-contact-grid">
-                        <div class="internal-contact-copy">
+                        <div class="internal-contact-copy" data-animate="fade-right">
                             <div class="section-kicker">
                                 <span class="section-kicker-dot" aria-hidden="true"></span>
                                 <span><?php esc_html_e( 'Kontak & Konsultasi', 'depocleanique-custom' ); ?></span>
@@ -59,9 +59,13 @@ get_template_part( 'template-parts/layout/site-header' );
                             <div class="dc-page-content">
                                 <?php the_content(); ?>
                             </div>
+
+                            <?php if ( function_exists( 'dc_contact_form_render' ) ) : ?>
+                                <?php dc_contact_form_render(); ?>
+                            <?php endif; ?>
                         </div>
 
-                        <aside class="internal-contact-panel" aria-label="<?php esc_attr_e( 'Informasi kontak Depo Cleanique', 'depocleanique-custom' ); ?>">
+                        <aside class="internal-contact-panel" data-animate="fade-left" aria-label="<?php esc_attr_e( 'Informasi kontak Depo Cleanique', 'depocleanique-custom' ); ?>">
                             <h2><?php esc_html_e( 'Informasi Kontak', 'depocleanique-custom' ); ?></h2>
 
                             <div class="internal-contact-list">
@@ -106,7 +110,7 @@ get_template_part( 'template-parts/layout/site-header' );
                     </div>
 
                     <!-- Peta Lokasi (Google Maps Embed) -->
-                    <div class="internal-contact-map-row mt-16">
+                    <div class="internal-contact-map-row mt-16" data-animate="fade-up">
                         <div class="bg-white p-4 rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden">
                             <iframe
                                 src="https://maps.google.com/maps?q=<?php echo urlencode( dc_get_address() ); ?>&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed"

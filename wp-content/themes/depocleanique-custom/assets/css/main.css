@@ -34,6 +34,12 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden; /* prevent translateX animation bleed */
+}
+
+body {
+    overflow-x: hidden; /* clip fade-left/fade-right pre-animation state + any wide content */
+    max-width: 100vw;
 }
 
 .screen-reader-text {
@@ -1023,16 +1029,15 @@ body.menu-open {
     --cta-blue-end: #0b7edb;
 
     position: relative;
-    display: grid;
-    grid-template-columns: 140px minmax(0, 1fr) auto;
-    column-gap: 48px;
-    row-gap: 24px;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 40px;
     max-width: 1120px;
     margin: 0 auto;
-    padding: 52px;
+    padding: 48px 52px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 32px;
     background: var(--color-navy);
     box-shadow: 0 26px 64px rgba(7, 95, 168, 0.22);
@@ -1090,7 +1095,8 @@ body.menu-open {
 }
 
 .dc-cta-content {
-    max-width: 620px;
+    flex: 1 1 auto;
+    max-width: 680px;
 }
 
 .dc-cta-badge {
@@ -1120,13 +1126,13 @@ body.menu-open {
 
 .dc-cta-title {
     max-width: 620px;
-    margin: 0 0 18px;
+    margin: 0 0 16px;
     color: #fff;
     font-family: "Plus Jakarta Sans", sans-serif;
-    font-size: 3rem;
+    font-size: clamp(1.9rem, 3.4vw, 2.6rem);
     font-weight: 900;
     letter-spacing: 0;
-    line-height: 1.08;
+    line-height: 1.12;
 }
 
 .dc-cta-copy {
@@ -1143,12 +1149,11 @@ body.menu-open {
 }
 
 .dc-cta-action {
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
-    justify-self: end;
-    min-width: max-content;
 }
 
 .dc-cta-link {
@@ -1202,28 +1207,8 @@ body.menu-open {
 
 @media (max-width: 1023px) {
     .dc-cta-card {
-        grid-template-columns: 108px minmax(0, 1fr);
-        column-gap: 32px;
-        padding: 44px;
-    }
-
-    .dc-cta-action {
-        grid-column: 2;
-        justify-self: start;
-        min-width: 0;
-    }
-
-    .dc-cta-icon {
-        width: 86px;
-        height: 86px;
-    }
-
-    .dc-cta-icon > .material-symbols-outlined:first-child {
-        font-size: 42px;
-    }
-
-    .dc-cta-title {
-        font-size: 2.5rem;
+        gap: 28px;
+        padding: 40px;
     }
 }
 
@@ -1233,38 +1218,12 @@ body.menu-open {
     }
 
     .dc-cta-card {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: flex-start;
         gap: 22px;
         padding: 30px;
         border-radius: 28px;
         text-align: left;
-    }
-
-    .dc-cta-icon-wrap {
-        justify-content: flex-start;
-    }
-
-    .dc-cta-icon {
-        width: 74px;
-        height: 74px;
-    }
-
-    .dc-cta-icon > .material-symbols-outlined:first-child {
-        font-size: 36px;
-    }
-
-    .dc-cta-icon-check {
-        right: 0;
-        bottom: 5px;
-        width: 23px;
-        height: 23px;
-        border-width: 2px;
-        font-size: 14px;
-    }
-
-    .dc-cta-title {
-        font-size: 2.05rem;
-        line-height: 1.12;
     }
 
     .dc-cta-copy {
@@ -1272,15 +1231,13 @@ body.menu-open {
     }
 
     .dc-cta-action {
-        grid-column: auto;
         width: 100%;
     }
 
     .dc-cta-link {
         width: 100%;
         gap: 8px;
-        padding-inline: 14px;
-        font-size: 13px;
+        padding-inline: 16px;
     }
 }
 
@@ -1360,6 +1317,16 @@ body.menu-open {
 .dc-contact-map img {
     opacity: 0.28;
     filter: saturate(0.8) contrast(1.04);
+}
+
+/* Google Maps embed mengisi penuh frame (di atas dekorasi gradient) */
+.dc-contact-map iframe {
+    position: relative;
+    z-index: 5;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
 }
 
 .dc-contact-map::before,
@@ -2117,6 +2084,7 @@ body.menu-open {
 
 .comparison-scroll {
     max-width: 980px;
+    width: 100%;         /* never exceed container */
     margin: 0 auto;
     padding: 0 0 8px;
     overflow-x: auto;
@@ -2679,6 +2647,163 @@ body.menu-open {
 
 .internal-contact-copy {
     max-width: 760px;
+}
+
+/* ─── Contact form ───────────────────────────────────── */
+.dc-contact-form-card {
+    margin-top: 32px;
+    padding: 28px;
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 18px 46px rgba(22, 50, 79, 0.06);
+}
+
+.dc-contact-form-title {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 1.35rem;
+    font-weight: 850;
+}
+
+.dc-contact-form-intro {
+    margin: 8px 0 20px;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.dc-contact-form {
+    display: grid;
+    gap: 16px;
+}
+
+.dc-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.dc-form-row {
+    display: grid;
+    gap: 7px;
+}
+
+.dc-contact-form label {
+    color: var(--color-text);
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.dc-contact-form label span {
+    color: var(--color-primary);
+}
+
+.dc-contact-form input,
+.dc-contact-form textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--color-text);
+    font: 500 15px/1.5 var(--dc-font);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dc-contact-form input::placeholder,
+.dc-contact-form textarea::placeholder {
+    color: #9aa7b4;
+}
+
+.dc-contact-form input:focus,
+.dc-contact-form textarea:focus {
+    outline: 0;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(11, 126, 219, 0.12);
+}
+
+.dc-contact-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.dc-contact-form-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    justify-self: start;
+    min-height: 50px;
+    padding: 0 26px;
+    border: 0;
+    border-radius: 14px;
+    background: var(--color-primary);
+    color: #fff;
+    font: 850 15px/1 var(--dc-font);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.dc-contact-form-submit:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.dc-contact-form-submit .material-symbols-outlined {
+    font-size: 19px;
+}
+
+/* Honeypot — hanya bot yang melihat/mengisi */
+.dc-form-hp {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.dc-form-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.dc-form-alert .material-symbols-outlined {
+    flex: 0 0 auto;
+    font-size: 20px;
+}
+
+.dc-form-alert-success {
+    color: var(--color-accent-dark);
+    background: var(--color-accent-soft);
+    border: 1px solid rgba(125, 186, 47, 0.32);
+}
+
+.dc-form-alert-error {
+    color: #b42318;
+    background: #fff0f0;
+    border: 1px solid rgba(180, 35, 24, 0.22);
+}
+
+@media (max-width: 600px) {
+    .dc-contact-form-card {
+        padding: 22px;
+    }
+
+    .dc-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dc-contact-form-submit {
+        width: 100%;
+    }
 }
 
 .internal-contact-copy h2,
@@ -3374,6 +3499,7 @@ body.menu-open {
     display: flex;
     overflow: hidden;
     width: min(100%, 520px);
+    max-width: 100%;     /* hard cap — never wider than viewport */
     padding: 14px 0;
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid rgba(217, 230, 242, 0.72);
@@ -5468,5 +5594,459 @@ body.menu-open {
     }
     .dc-card-media-custom {
         border-radius: 12px !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════
+ * PARTNERSHIP CARD (redesain mobile-first, image-forward)
+ * Gambar = fokus utama (full-bleed, chip meta di-overlay).
+ * Di layar sempit tombol WhatsApp menyusut jadi icon-only.
+ * Markup: template-parts/partnership/card.php
+ * ═══════════════════════════════════════════════════════ */
+.dc-partner-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.dc-partner-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 18px 40px -24px rgba(11, 126, 219, 0.45);
+    transform: translateY(-3px);
+}
+
+/* ── Media — hero of the card ── */
+.dc-partner-card-media {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    background: var(--color-primary-soft);
+    overflow: hidden;
+}
+
+.dc-partner-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.dc-partner-card:hover .dc-partner-card-media img {
+    transform: scale(1.06);
+}
+
+.dc-partner-card-media-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-primary-soft), var(--color-accent-soft));
+}
+
+.dc-partner-card-media-fallback .dc-icon {
+    width: 38%;
+    height: auto;
+    color: rgba(11, 126, 219, 0.28);
+}
+
+/* Gradient agar chip overlay tetap terbaca di atas foto apa pun */
+.dc-partner-card-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(13, 30, 48, 0.55) 0%,
+        rgba(13, 30, 48, 0.05) 38%,
+        transparent 60%
+    );
+    pointer-events: none;
+}
+
+/* ── Chip meta yang di-overlay di atas gambar ── */
+.dc-partner-card-type,
+.dc-partner-card-badge,
+.dc-partner-card-location {
+    position: absolute;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.dc-partner-card-type {
+    top: 10px;
+    left: 10px;
+    max-width: calc(100% - 20px);
+    padding: 5px 10px;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-primary-dark);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(4px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.dc-partner-card-badge {
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-white);
+    background: var(--color-accent-dark);
+}
+
+.dc-partner-card-location {
+    left: 10px;
+    bottom: 10px;
+    gap: 4px;
+    max-width: calc(100% - 20px);
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-white);
+    background: rgba(13, 30, 48, 0.55);
+    backdrop-filter: blur(4px);
+}
+
+.dc-partner-card-location .dc-icon {
+    flex: 0 0 auto;
+    width: 13px;
+    height: 13px;
+}
+
+.dc-partner-card-location span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* ── Body ── */
+.dc-partner-card-body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 14px 0;
+}
+
+.dc-partner-card-title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.dc-partner-card-title a {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: var(--color-navy);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.dc-partner-card:hover .dc-partner-card-title a {
+    color: var(--color-primary);
+}
+
+.dc-partner-card-summary {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}
+
+.dc-partner-card-services {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dc-partner-card-services li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.76rem;
+    color: var(--color-text-muted);
+}
+
+.dc-partner-card-services .dc-icon {
+    flex: 0 0 auto;
+    width: 14px;
+    height: 14px;
+    color: var(--color-accent-dark);
+}
+
+.dc-partner-card-services li span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* ── Aksi ── */
+.dc-partner-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-top: 1px solid var(--color-border);
+}
+
+.dc-partner-card-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 40px;
+    border-radius: 11px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.dc-partner-card-btn .dc-icon {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+}
+
+.dc-partner-card-btn-primary {
+    flex: 1 1 auto;
+    color: var(--color-white);
+    background: var(--color-primary);
+}
+
+.dc-partner-card-btn-primary:hover {
+    background: var(--color-primary-dark);
+}
+
+.dc-partner-card-btn-wa {
+    flex: 0 0 auto;
+    padding: 0 14px;
+    color: var(--color-navy);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+}
+
+.dc-partner-card-btn-wa:hover {
+    color: var(--color-accent-dark);
+    background: var(--color-accent-soft);
+    border-color: var(--color-accent);
+}
+
+/* ── Layar sempit: tonjolkan gambar, ringkas aksi ──
+ * Tombol WhatsApp → icon-only square, tombol Detail → label saja. */
+@media (max-width: 600px) {
+    .dc-partner-card-body {
+        padding: 10px 12px 0;
+    }
+
+    .dc-partner-card-services {
+        display: none;
+    }
+
+    .dc-partner-card-actions {
+        gap: 6px;
+        padding: 10px 12px;
+    }
+
+    .dc-partner-card-btn-primary .dc-icon {
+        display: none;
+    }
+
+    .dc-partner-card-btn-wa {
+        width: 40px;
+        padding: 0;
+    }
+
+    .dc-partner-card-btn-wa .dc-partner-card-btn-label {
+        display: none;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════
+ * DETAIL MITRA — perapian khusus mobile
+ * Markup: single-partnership.php + template-parts/partnership/*
+ * ═══════════════════════════════════════════════════════ */
+
+/* Tablet & bawah: foto mitra tampil lebih dulu (di atas judul) saat hero stack. */
+@media (max-width: 768px) {
+    .partnership-detail-hero-grid {
+        gap: 24px;
+    }
+
+    .partnership-detail-media {
+        order: -1;
+    }
+}
+
+/* Layar sempit: rapatkan spacing, kecilkan tipografi, ringkas kartu. */
+@media (max-width: 600px) {
+    .partnership-detail-hero {
+        padding: 40px 0 36px;
+    }
+
+    .partnership-detail-hero h1 {
+        font-size: 1.95rem;
+    }
+
+    .partnership-detail-hero p {
+        margin-top: 14px;
+        font-size: 1rem;
+    }
+
+    .partnership-breadcrumb {
+        margin-bottom: 18px;
+        font-size: 0.85rem;
+    }
+
+    .partnership-detail-meta {
+        gap: 8px;
+        margin: 18px 0;
+    }
+
+    .partnership-detail-meta span {
+        min-height: 38px;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    .partnership-detail-media {
+        border-radius: 20px;
+    }
+
+    .partnership-detail-media > span {
+        min-height: 200px;
+    }
+
+    /* Layout konten + sidebar */
+    .partnership-single-layout {
+        gap: 20px;
+        padding: 36px 0 48px;
+    }
+
+    .partnership-single-main {
+        gap: 20px;
+    }
+
+    .partnership-content,
+    .partnership-info-section,
+    .partnership-sidebar {
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .partnership-content {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+
+    .partnership-info-flat {
+        margin-bottom: 8px;
+    }
+
+    .partnership-info-flat h2,
+    .partnership-info-section h2 {
+        margin-bottom: 14px;
+        font-size: 1.15rem;
+    }
+
+    .partnership-check-list-flat {
+        gap: 10px;
+    }
+
+    .partnership-sidebar h2 {
+        font-size: 1.15rem;
+    }
+
+    .partnership-sidebar dl div {
+        padding: 12px;
+    }
+
+    /* "Mitra lain" + CTA yang kini full-width di bawah layout */
+    .partnership-related {
+        padding: 40px 0 0;
+    }
+
+    .partnership-cta-section {
+        margin-bottom: 48px;
+        border-radius: 24px;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+ * SCROLL ANIMATIONS — Intersection Observer driven
+ * GPU-safe: only transform + opacity. No layout thrash.
+ * ═══════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+
+    /* ── Initial (hidden) states ─────────────────────── */
+    [data-animate] {
+        opacity: 0;
+        transition-property: opacity, transform;
+        transition-duration: 0.65s;
+        transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+    }
+
+    [data-animate="fade-up"]    { transform: translateY(30px); }
+    [data-animate="fade-down"]  { transform: translateY(-22px); }
+    [data-animate="fade-left"]  { transform: translateX(38px); }
+    [data-animate="fade-right"] { transform: translateX(-38px); }
+    [data-animate="scale-in"]   { transform: scale(0.93); }
+
+    /* ── Stagger delay steps (set by JS or attribute) ── */
+    [data-animate-delay="1"] { transition-delay: 0.07s; }
+    [data-animate-delay="2"] { transition-delay: 0.14s; }
+    [data-animate-delay="3"] { transition-delay: 0.22s; }
+    [data-animate-delay="4"] { transition-delay: 0.30s; }
+    [data-animate-delay="5"] { transition-delay: 0.38s; }
+    [data-animate-delay="6"] { transition-delay: 0.46s; }
+
+    /* ── Triggered (visible) state ──────────────────── */
+    [data-animate].is-visible {
+        opacity: 1;
+        transform: none;
+        will-change: auto;
+    }
+
+    /* ── Clean up delay after animation completes ───── */
+    [data-animate].is-visible[data-animate-delay] {
+        /* delay already played — keep for transition but reset will-change */
+        will-change: auto;
+    }
+}
+
+/* Reduced-motion: skip animation entirely */
+@media (prefers-reduced-motion: reduce) {
+    [data-animate] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
     }
 }

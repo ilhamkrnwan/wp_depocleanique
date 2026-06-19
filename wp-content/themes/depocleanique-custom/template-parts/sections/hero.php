@@ -2,7 +2,7 @@
 /**
  * Section: Hero
  * Diport dari _landing-source.html — split layout, float cards, stats.
- * Gambar lokal: assets/images/hero-store.jpg (path via get_template_directory_uri()).
+ * Gambar lokal: assets/images/depocleanique-2.avif (path via get_template_directory_uri()).
  * CTA WhatsApp via helper dc_get_wa_url().
  */
 
@@ -26,7 +26,7 @@ $dc_img = get_template_directory_uri() . '/assets/images';
             <!-- ────────────── LEFT : Copy ────────────── -->
             <div class="space-y-8">
                 <!-- Badge -->
-                <div class="hero-badge">
+                <div class="hero-badge" data-animate="fade-up">
                     <span class="material-symbols-outlined" style="font-size: 15px; color: #78be20; font-variation-settings: 'FILL' 1;">verified</span>
                     <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #075a96;">
                         <?php esc_html_e( 'Terpercaya Sejak 2011', 'depocleanique-custom' ); ?>
@@ -34,7 +34,7 @@ $dc_img = get_template_directory_uri() . '/assets/images';
                 </div>
 
                 <!-- Headline -->
-                <div>
+                <div data-animate="fade-up" data-animate-delay="1">
                     <h1 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(36px, 5vw, 56px); font-weight: 800; line-height: 1.1; letter-spacing: -0.025em; color: #17212b;">
                         <?php esc_html_e( 'Peluang Usaha', 'depocleanique-custom' ); ?><br />
                         <span style="color: #0879c9; position: relative; display: inline-block;">
@@ -49,14 +49,12 @@ $dc_img = get_template_directory_uri() . '/assets/images';
                 </div>
 
                 <!-- Body -->
-                <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; line-height: 1.7; color: #66727d; max-width: 440px;">
-                    <?php esc_html_e( 'Investasi cerdas dengan dukungan', 'depocleanique-custom' ); ?>
-                    <strong style="color: #075a96"><?php esc_html_e( 'AI marketing', 'depocleanique-custom' ); ?></strong>
-                    <?php esc_html_e( 'dan produk kebutuhan harian yang pasti laku. Ekosistem bisnis modern yang teruji.', 'depocleanique-custom' ); ?>
+                <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; line-height: 1.7; color: #66727d; max-width: 440px;" data-animate="fade-up" data-animate-delay="2">
+                    <?php esc_html_e( 'Investasi cerdas dengan potensi keuntungan tinggi dari produk kebutuhan harian yang pasti laku. Sistem bisnis teruji, mandiri, dan bebas biaya royalti.', 'depocleanique-custom' ); ?>
                 </p>
 
                 <!-- CTA Buttons -->
-                <div class="flex flex-wrap gap-3">
+                <div class="flex flex-wrap gap-3" data-animate="fade-up" data-animate-delay="3">
                     <a class="hero-cta-primary"
                        href="<?php echo esc_url( dc_get_wa_url( 'hero' ) ); ?>"
                        target="_blank" rel="noopener noreferrer">
@@ -69,7 +67,7 @@ $dc_img = get_template_directory_uri() . '/assets/images';
                 </div>
 
                 <!-- Animated social proof ticker -->
-                <div class="hero-ticker" aria-label="<?php esc_attr_e( 'Ringkasan kepercayaan dan performa Depo Cleanique', 'depocleanique-custom' ); ?>">
+                <div class="hero-ticker" data-animate="fade-up" data-animate-delay="4" aria-label="<?php esc_attr_e( 'Ringkasan kepercayaan dan performa Depo Cleanique', 'depocleanique-custom' ); ?>">
                     <?php
                     $hero_ticker_items = [
                         '500+ Mitra Aktif',
@@ -77,7 +75,7 @@ $dc_img = get_template_directory_uri() . '/assets/images';
                         'Break Even 4&ndash;6 Bulan',
                         'Dipercaya UMKM &amp; Retail',
                         'Produk Kebutuhan Harian',
-                        'Support Marketing &amp; Branding',
+                        'Bebas Franchise Fee',
                     ];
                     ?>
                     <?php for ( $i = 0; $i < 2; $i++ ) : ?>
@@ -93,10 +91,10 @@ $dc_img = get_template_directory_uri() . '/assets/images';
             </div>
 
             <!-- ────────────── RIGHT : Visual ────────────── -->
-            <div class="hidden md:block relative" style="padding: 20px 20px 40px 10px">
+            <div class="hidden md:block relative" style="padding: 20px 20px 40px 10px" data-animate="fade-left" data-animate-delay="2">
                 <!-- Main image -->
                 <div class="hero-image-wrap" style="aspect-ratio: 4/3; position: relative">
-                    <img src="<?php echo esc_url( $dc_img . '/hero-store.jpg' ); ?>"
+                    <img src="<?php echo esc_url( $dc_img . '/depocleanique-2.avif' ); ?>"
                          alt="<?php esc_attr_e( 'Depo Cleanique Store', 'depocleanique-custom' ); ?>"
                          style="width: 100%; height: 100%; object-fit: cover;" />
                     <!-- Subtle vignette at bottom -->
@@ -122,7 +120,7 @@ $dc_img = get_template_directory_uri() . '/assets/images';
                 <div class="float-card float-anim-slow" style="position: absolute; top: -20px; right: -20px; padding: 16px 20px; min-width: 180px;">
                     <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 600; color: #66727d; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px;"><?php esc_html_e( 'Target Progress', 'depocleanique-custom' ); ?></p>
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; color: #17212b;">Q4 2024</span>
+                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; color: #17212b;">Q4 2026</span>
                         <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; color: #075a96;">88%</span>
                     </div>
                     <div style="width: 100%; height: 7px; background: #eaf6fd; border-radius: 999px; overflow: hidden;">

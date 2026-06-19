@@ -42,16 +42,16 @@ function depocleanique_customizer_register( $wp_customize ) {
 
     // ── Nomor WhatsApp ─────────────────────────────
     $wp_customize->add_setting( 'dc_wa_number', [
-        'default'           => '6285600061005',
+        'default'           => '6287872180088',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ] );
     $wp_customize->add_control( 'dc_wa_number', [
         'label'       => __( 'Nomor WhatsApp', 'depocleanique-custom' ),
-        'description' => __( 'Tanpa tanda +, spasi, atau strip. Contoh: 6285600061005', 'depocleanique-custom' ),
+        'description' => __( 'Tanpa tanda +, spasi, atau strip. Contoh: 6287872180088', 'depocleanique-custom' ),
         'section'     => 'dc_contact_section',
         'type'        => 'text',
-        'input_attrs' => [ 'placeholder' => '6285600061005' ],
+        'input_attrs' => [ 'placeholder' => '6287872180088' ],
     ] );
 
     // ── Label Tampil Nomor WA ──────────────────────

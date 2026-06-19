@@ -46,7 +46,7 @@ $is_external_button = $has_button && 0 === strpos( $button_url, 'http' ) && 0 !=
 <section class="internal-page-hero internal-page-hero--<?php echo esc_attr( $page_type ); ?>">
     <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
         <div class="internal-page-hero-inner">
-            <div class="internal-page-hero-content">
+            <div class="internal-page-hero-content" data-animate="fade-right">
                 <p class="internal-page-hero-eyebrow">
                     <span aria-hidden="true"></span>
                     <?php echo esc_html( $eyebrow ); ?>
@@ -77,7 +77,7 @@ $is_external_button = $has_button && 0 === strpos( $button_url, 'http' ) && 0 !=
                 <?php endif; ?>
             </div>
 
-            <div class="internal-page-hero-aside">
+            <div class="internal-page-hero-aside" data-animate="fade-left" data-animate-delay="1">
                 <div
                     class="internal-page-hero-visual<?php echo $has_visual ? ' has-image' : ''; ?>"
                     <?php if ( $has_visual ) : ?>

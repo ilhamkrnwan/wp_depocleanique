@@ -37,6 +37,16 @@ $dc_foot_service = [
     [ 'label' => __( 'Alur Kemitraan', 'depocleanique-custom' ),   'href' => $dc_anchor( 'alur-kemitraan' ) ],
 ];
 
+// Brand ekosistem PT Indotech Berkah Abadi
+$dc_foot_brands = [
+    [ 'label' => 'Indotech.id',         'href' => 'https://indotech.id/',             'icon' => 'corporate_fare' ],
+    [ 'label' => 'Cleanique Mart',      'href' => 'https://cleaniquemart.com/',        'icon' => 'storefront' ],
+    [ 'label' => 'Cleanique Lab',       'href' => 'https://cleaniquelab.com/',         'icon' => 'science' ],
+    [ 'label' => 'Cleanique Academy',   'href' => 'https://cleaniqueacademy.com/',     'icon' => 'school' ],
+    [ 'label' => 'Prokopi',             'href' => 'https://prokopi.id/',               'icon' => 'coffee' ],
+    [ 'label' => 'Malabeez',            'href' => 'https://malabeez.co.id/',           'icon' => 'spa' ],
+];
+
 // Social — platform => [label, url, svg path]
 $dc_socials = [
     'instagram' => [
@@ -66,7 +76,7 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
         <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
 
             <!-- ─ Brand Column ─ -->
-            <div class="md:col-span-4 space-y-6">
+            <div class="md:col-span-3 space-y-6">
                 <a href="<?php echo esc_url( home_url( '/' ) ); ?>"
                    class="inline-block no-underline"
                    aria-label="<?php esc_attr_e( 'Depo Cleanique — Kembali ke beranda', 'depocleanique-custom' ); ?>">
@@ -128,8 +138,26 @@ $dc_logo_uri  = get_template_directory_uri() . '/assets/images/depocleanique.web
                 </ul>
             </div>
 
+            <!-- ─ Nav Col: Brand Keluarga ─ -->
+            <div class="md:col-span-2">
+                <span class="footer-col-label"><?php esc_html_e( 'Brand Indotech', 'depocleanique-custom' ); ?></span>
+                <ul class="space-y-3.5">
+                    <?php foreach ( $dc_foot_brands as $brand ) : ?>
+                        <li>
+                            <a class="footer-link footer-contact-link"
+                               href="<?php echo esc_url( $brand['href'] ); ?>"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                <span class="material-symbols-outlined footer-contact-icon" aria-hidden="true"><?php echo esc_html( $brand['icon'] ); ?></span>
+                                <?php echo esc_html( $brand['label'] ); ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
             <!-- ─ Kontak (helper data global) ─ -->
-            <div class="md:col-span-4">
+            <div class="md:col-span-3">
                 <span class="footer-col-label"><?php esc_html_e( 'Kontak', 'depocleanique-custom' ); ?></span>
                 <ul class="space-y-3.5">
                     <li>

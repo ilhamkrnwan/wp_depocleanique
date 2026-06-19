@@ -85,7 +85,7 @@ $badge_styles = [
 
 <section id="alur-kemitraan" class="partnership-section">
     <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-        <div class="partnership-heading">
+        <div class="partnership-heading" data-animate="fade-up">
             <div class="section-kicker">
                 <span class="section-kicker-dot" aria-hidden="true"></span>
                 <span>
@@ -109,7 +109,7 @@ $badge_styles = [
                 $desktop_class = $is_odd ? 'md:self-start md:flex-row-reverse' : 'md:self-end md:flex-row';
                 $is_final      = ! empty( $step['final'] );
                 ?>
-                <article class="relative z-10 flex flex-row items-start gap-[18px] pb-9 md:pb-[52px] last:pb-0 md:w-[calc(50%+23px)] <?php echo esc_attr( $desktop_class ); ?>">
+                <article class="relative z-10 flex flex-row items-start gap-[18px] pb-9 md:pb-[52px] last:pb-0 md:w-[calc(50%+23px)] <?php echo esc_attr( $desktop_class ); ?>" data-animate="fade-up">
                     <div class="partnership-flow-number<?php echo $is_final ? ' is-final' : ''; ?>">
                         <?php echo esc_html( $step['number'] ); ?>
                     </div>

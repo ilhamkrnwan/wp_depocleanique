@@ -61,6 +61,41 @@ if ( '' === trim( wp_strip_all_tags( $archive_description ) ) ) {
         </div>
     </section>
 
+    <?php
+    $dc_shop_url     = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/katalog/' );
+    $dc_current_cat  = is_product_category() ? get_queried_object_id() : 0;
+    $dc_product_cats = get_terms(
+        [
+            'taxonomy'   => 'product_cat',
+            'hide_empty' => true,
+            'parent'     => 0,
+        ]
+    );
+    ?>
+    <?php if ( ! is_wp_error( $dc_product_cats ) && ! empty( $dc_product_cats ) ) : ?>
+        <section class="dc-wc-filter">
+            <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
+                <nav class="dc-wc-chips" aria-label="<?php esc_attr_e( 'Filter kategori produk', 'depocleanique-custom' ); ?>">
+                    <a class="dc-wc-chip<?php echo ! $dc_current_cat ? ' is-active' : ''; ?>" href="<?php echo esc_url( $dc_shop_url ); ?>">
+                        <?php esc_html_e( 'Semua Produk', 'depocleanique-custom' ); ?>
+                    </a>
+                    <?php foreach ( $dc_product_cats as $dc_cat ) : ?>
+                        <?php
+                        $dc_cat_link = get_term_link( $dc_cat );
+                        if ( is_wp_error( $dc_cat_link ) ) {
+                            continue;
+                        }
+                        ?>
+                        <a class="dc-wc-chip<?php echo $dc_current_cat === $dc_cat->term_id ? ' is-active' : ''; ?>" href="<?php echo esc_url( $dc_cat_link ); ?>">
+                            <span><?php echo esc_html( $dc_cat->name ); ?></span>
+                            <span class="dc-wc-chip-count"><?php echo (int) $dc_cat->count; ?></span>
+                        </a>
+                    <?php endforeach; ?>
+                </nav>
+            </div>
+        </section>
+    <?php endif; ?>
+
     <section class="dc-wc-catalog">
         <div class="container mx-auto px-margin-mobile md:px-margin-desktop">
             <?php if ( function_exists( 'woocommerce_output_all_notices' ) ) : ?>
